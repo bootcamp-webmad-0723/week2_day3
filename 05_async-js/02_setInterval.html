@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button>DETENER EL INTERVALO</button>
+
+
+    <script>
+
+        let seconds = 0
+
+        const intervalID = setInterval(() => {
+            seconds++
+            console.log(`Han pasado ${seconds} segundos`)
+        }, 100)
+
+
+        document.querySelector('button').onclick = () => {
+            clearInterval(intervalID)
+            console.log(`Intervalo con id ${intervalID} detenido`)
+        }
+
+    </script>
+</body>
+
+</html>

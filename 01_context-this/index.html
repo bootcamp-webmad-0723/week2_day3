@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+
+        // Global context: window object
+        console.log('el contexto global es', this)
+        console.log('¿Es window el contexto global?', window === this)
+
+
+
+
+
+        // Funtion context: window object
+        function whatever() {
+            console.log('¿Cuál es el contexto de una función?', this)
+        }
+
+        whatever()
+
+
+
+
+        // Method context: own object
+        const person = {
+            name: 'German',
+            weight: 70,
+            sayHi() {
+                console.log(`Me llamo ${this.name}, '¡encantado!`)
+            },
+            walk1() {
+                setInterval(function () {               // FAIL: el contexto de la función (this) es window
+                    this.weight -= .1
+                    console.log('Ahora mi peso es', this.weight)
+                }, 1000)
+            },
+            walk2() {
+                const that = this
+                setInterval(function () {               // FAIL: ñapa máxima
+                    that.weight -= .1
+                    console.log('Ahora mi peso es', that.weight)
+                }, 1000)
+            },
+            walk3() {
+                setInterval(function () {               // SUCCESS: .bind() reorienta el contexto de la función
+                    this.weight -= .1
+                    console.log('Ahora mi peso es', this.weight)
+                }.bind(this), 1000)
+            },
+            walk4() {
+                setInterval(() => {
+                    this.weight -= .1
+                    console.log('Ahora mi peso es', this.weight)
+                }, 1000)
+            }
+        }
+
+        person.sayHi()
+        // person.walk1()
+        // person.walk2()
+        // person.walk3()
+        person.walk4()
+
+
+    </script>
+</body>
+
+</html>
